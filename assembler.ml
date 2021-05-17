@@ -1,4 +1,6 @@
 open Ast
+open Base
+open Code
 
 let readlines filename = 
     let ic = open_in filename in
@@ -30,11 +32,31 @@ let parse (s : string) : expr =
 let readexprs filename = 
     List.map parse (nonemptylines filename);;
 
-(* let buildsymbol_table = 
-TODO
-    *)
-
-(* 
+let buildsymbol_table exprs =
+    let rec first_pass exprs symbol_table rom_addr = 
+        match exprs with
+        | [] -> symbol_table
+        | h::t -> 
+                match h with
+                | Label s -> first_pass t (Map.add_exn symbol_table s rom_addr) rom_addr
+                | Adigit _ | Asymbol _ | Cinst _ -> 
+                        first_pass t symbol_table (rom_addr + 1)
+                | Comment _ | _ -> first_pass t symbol_table rom_addr in
+    let rec second_pass exprs symbol_table ram_addr =
+        match exprs with
+        | [] -> symbol_table
+        | h::t ->
+                match h with
+                | Asymbol s ->
+                        match (Map.find symbol_table s) with
+                        | None -> second_pass t (Map.add_exn symbol_table s
+                        ram_addr) (ram_addr + 1)
+                        | Some _ -> second_pass t symbol_table ram_addr
+                | _ -> second_pass t symbol_table ram_addr in
+    let first_symbol_table = first_pass exprs Code.symbol_table 0 in
+    let final_symbol_table = second_pass exprs first_symbol_table 16 in
+    final_symbol_table;;
+ 
 
 (* let translate expr_list symbol_table = 
 TODO
