@@ -3,6 +3,6 @@
 
 (ocamllex lexer)
 
-(library
+(executable
   (name assembler)
-  (libraries base))
+  (libraries base core stdio))
