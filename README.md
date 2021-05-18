@@ -10,6 +10,12 @@ dune exec -- ./assembler.exe <filename>.asm
 ```
 where `<filename>.asm` is the assembly file you wish to translate. The file `<filename>.hack` should be created.
 
+To run the tests, run
+
+``` shell
+dune runtest
+```
+
 ## Parsing/Lexing
 
 The parsing library menhir, and the lexing library ocamllex, are used to extract the A-instructions, C-instructions, and Labels. It's probably overkill, but it was quite simple to setup after following chapter 10 of [this book about functional programming in OCaml](https://www.cs.cornell.edu/courses/cs3110/2021sp/textbook/interp/intro.html).
