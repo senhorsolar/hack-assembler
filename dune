@@ -8,4 +8,4 @@
   (libraries base core stdio))
 
 (cram
-  (deps assembler.exe asm/Add.asm asm/Max.asm asm/Rect.asm asm/Pong.asm))
+  (deps assembler.exe asm/Add.asm asm/Max.asm asm/Rect.asm))
