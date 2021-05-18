@@ -22,7 +22,7 @@ let symbol_table = Map.of_alist_exn (module String)
                       "R13", 13;
                       "R14", 14;
                       "R15", 15;
-                      "SCREEN", 16484;
+                      "SCREEN", 16384;
                       "KBD", 24576];;
 
 let translateComp c = match c with
